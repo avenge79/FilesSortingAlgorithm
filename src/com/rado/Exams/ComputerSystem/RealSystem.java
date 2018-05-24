@@ -23,17 +23,14 @@ public class RealSystem implements Comparable<RealSystem> {
     }
 
     public static void main(String[] args) {
-        final String path = "C:\\Windows\\Temp";
+        final String PATH = "C:\\Windows\\Temp";
 
         List<RealSystem> al = new ArrayList<RealSystem>();
 
         File dir;
-        //File[] paths;
-        //ArrayList<String> al = new ArrayList<>();
 
         try {
             dir = new File(path);
-            //paths = dir.listFiles();
 
             Stack<File> st = new Stack<>();
             st.push(dir);
@@ -54,52 +51,22 @@ public class RealSystem implements Comparable<RealSystem> {
                     for (File file : ch.listFiles()) {
                         if (file.isFile()) {
                             final RealSystem fileData = new RealSystem(file.getName(), file.length());
-                            //System.out.println("  " + file.getName() + ", Size: "
-                                   // + (double) file.length() / 1024 + " KB");
                             folderLength += file.length();
                             filesInDirCount++;
                             al.add(fileData);
-
                         }
                     }
+                    
                     Collections.sort(al, Collections.reverseOrder());
                     System.out.println("--> Files: " + filesInDirCount + ", Size: "
                             + (double) folderLength / 1024 + " KB");
                     System.out.println(al);
-                } //else System.out.println("Not a directory: " + ch);
+                }
+                
                 al = new ArrayList<>();
             }
         } catch (Exception e) {
             System.out.println("Error! " + e);
-        }
-    }
-
-    public static void listFilesRecursive(java.io.File root) {
-        File[] listOfFilesAndDirectory = root.listFiles();
-
-        if (listOfFilesAndDirectory != null) {
-            for (File file : listOfFilesAndDirectory) {
-                if (file.isDirectory()) {
-                    listFilesRecursive(file);
-                } else {
-                    System.out.println(file);
-                }
-            }
-        }
-    }
-
-    private static void printFiles(java.io.File dir) {
-        Stack<File> stack = new Stack<>();
-        stack.push(dir);
-
-        while (!stack.isEmpty()) {
-            java.io.File child = stack.pop();
-            if (child.isDirectory()) {
-                for (java.io.File f : child.listFiles()) stack.push(f);
-                //System.out.println("Directory: " + child);
-            } else if (child.isFile()) {
-                System.out.println(child.getPath());
-            }
         }
     }
 }
